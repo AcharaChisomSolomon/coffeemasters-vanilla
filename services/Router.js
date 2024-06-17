@@ -20,16 +20,22 @@ const Router = {
         }
 
         let pageElement = null
+
         switch (route) {
-            case '/':
-                pageElement = document.createElement('h1');
-                pageElement.textContent = 'Home';
+            case "/":
+                pageElement = document.createElement("menu-page");
                 break;
-            case '/order':
-                pageElement = document.createElement('h1');
-                pageElement.textContent = 'Order';
+            case "/order":
+                pageElement = document.createElement("order-page");
                 break;
+            default:
+                if (route.startsWith("/product-")) {
+                    pageElement = document.createElement("details-page");
+                    const paramId = route.substring(route.lastIndexOf("-")+1);
+                    pageElement.dataset.productId = paramId;
+                }
         }
+
         const cache = document.querySelector('main');
         cache.innerHTML = '';
         cache.appendChild(pageElement);
